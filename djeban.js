@@ -27,7 +27,7 @@ function eb_start()
 		$('body').append('<div class="g1" style="position:fixed; top:100px; left:40%;"><img src="https://raw.githubusercontent.com/Crasher69/dj_eban/master/g1.gif" /></div>');
 		$('body').append('<div class="g2" style="position:fixed; top:300px; right:30%;"><img src="https://raw.githubusercontent.com/Crasher69/dj_eban/master/g2.gif" /></div>');
 		
-		intTimer = setInterval(kach, 10);
+		intTimer = setInterval(kach, 40);
 	},1300);
 	
 }
@@ -39,49 +39,49 @@ function kach()
 	let seconds = date.getSeconds();
 	scaleStr = "scale("+currscale+")"; 
 	
-		if (currScr%15 == 0){
+		if (currScr%3 == 0){
 			$("body").css("background-color", getRandomColor());
 		}
 		
 		if (currScr%2 == 0){
 	
 			if (currscale == 1 || currscale<1) { 
-				currscale= currscale + 0.1;
+				currscale= currscale + 0.2;
 				scaledirection = "top";
 				scaleStr = "scale("+currscale+")"; 
 			}
 			
 			if (currscale > 1 && scaledirection == "top") { 
-				currscale= currscale + 0.1;
+				currscale= currscale + 0.2;
 				scaleStr = "scale("+currscale+")"; 
 			}
 			
 			if (currscale == 2 || currscale>2) { 
-				currscale = currscale - 0.1;
+				currscale = currscale - 0.2;
 				scaledirection = "down";
 				scaleStr = "scale("+currscale+")"; 
 			}
 			if (currscale > 1 && scaledirection == "down") { 
-				currscale= currscale - 0.1;
+				currscale= currscale - 0.2;
 				scaleStr = "scale("+currscale+")"; 
 			}		
 		}
 
 		if (currScr<20 && direction == "top") {
-			currScr++;
+			currScr+=2;
 			$('body').css("transform", "rotate("+currScr+"deg) "+scaleStr+"");
 		}
 		if (currScr==20 && direction == "top") {
 			direction = "back";
-			currScr--;
+			currScr-=2;
 			$('body').css("transform", "rotate("+currScr+"deg) "+scaleStr+"");
 		}
 		if (currScr<20 && direction == "back") {
-			currScr--;
+			currScr-=2;
 			$('body').css("transform", "rotate("+currScr+"deg) "+scaleStr+"");
 		}
 		if (currScr == -20 && direction == "back") {
-			currScr++;
+			currScr+=2;
 			direction = "top";
 			$('body').css("transform", "rotate("+currScr+"deg) "+scaleStr+"");
 		}
