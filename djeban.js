@@ -24,8 +24,8 @@ function eb_start()
 {
 	dj();
 	setTimeout(function(){
-		$('body').append('<div class="g1" style="position:fixed; top:80px; left:40%;"><img src="https://raw.githubusercontent.com/Crasher69/dj_eban/master/g1.gif" /></div>');
-		$('body').append('<div class="g2" style="position:fixed; top:60%; right:40%;"><img src="https://raw.githubusercontent.com/Crasher69/dj_eban/master/g2.gif" /></div>');
+		$('body').append('<div class="g1" style="position:fixed; top:100px; left:40%;"><img src="https://raw.githubusercontent.com/Crasher69/dj_eban/master/g1.gif" /></div>');
+		$('body').append('<div class="g2" style="position:fixed; top:300px; right:30%;"><img src="https://raw.githubusercontent.com/Crasher69/dj_eban/master/g2.gif" /></div>');
 		
 		intTimer = setInterval(kach, 10);
 	},1300);
