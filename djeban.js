@@ -7,9 +7,6 @@ var intTimer = null;
 
 function dj()
 	{
-		$('body').append('<div class="g1" style="display:none; position:fixed; top:80px; left:40%;"><img src="https://raw.githubusercontent.com/Crasher69/dj_eban/master/g1.gif" /></div>');
-		$('body').append('<div class="g2" style="display:none; position:fixed; top:60%; right:40%;"><img src="https://raw.githubusercontent.com/Crasher69/dj_eban/master/g2.gif" /></div>');
-		
 		var myAudio = new Audio('https://raw.githubusercontent.com/Crasher69/dj_eban/master/dj.mp3'); 
 		myAudio.addEventListener('ended', function() {
 				clearInterval(intTimer);
@@ -27,8 +24,9 @@ function eb_start()
 {
 	dj();
 	setTimeout(function(){
-		$('.g1').show();
-		$('.g2').show();
+		$('body').append('<div class="g1" style="display:none; position:fixed; top:80px; left:40%;"><img src="https://raw.githubusercontent.com/Crasher69/dj_eban/master/g1.gif" /></div>');
+		$('body').append('<div class="g2" style="display:none; position:fixed; top:60%; right:40%;"><img src="https://raw.githubusercontent.com/Crasher69/dj_eban/master/g2.gif" /></div>');
+		
 		intTimer = setInterval(kach, 10);
 	},1300);
 	
