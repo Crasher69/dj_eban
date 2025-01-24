@@ -1,99 +1,76 @@
-var currScr = 0;
-var sec = 0;
-var direction = "top";
-var currscale = 1;
-var scaledirection = "top";
-var intTimer = null;
+class DJEban {
+    constructor() {
+        this.currScr = 0;
+        this.currScale = 1;
+        this.scaleDirection = "up";
+        this.direction = "top";
+        this.intTimer = null;
+        this.audio = new Audio('https://raw.githubusercontent.com/Crasher69/dj_eban/master/dj.mp3');
 
-function dj()
-	{
-		var myAudio = new Audio('https://raw.githubusercontent.com/Crasher69/dj_eban/master/dj.mp3'); 
-		myAudio.addEventListener('ended', function() {
-				clearInterval(intTimer);
-				$('.g1').remove();
-				$('.g2').remove();
-				$('body').css("transform", "none");
-				$("body").css("background-color", "#fff");
-			//this.currentTime = 0;
-			//this.play();
-		}, false);
-		myAudio.play();		
-	}	
+        this.audio.addEventListener('ended', () => this.resetScene());
+    }
 
-function eb_start()
-{
-	dj();
-	setTimeout(function(){
-		$('body').append('<div class="g1" style="position:fixed; top:100px; left:40%;"><img src="https://raw.githubusercontent.com/Crasher69/dj_eban/master/g1.gif" /></div>');
-		$('body').append('<div class="g2" style="position:fixed; top:300px; right:30%;"><img src="https://raw.githubusercontent.com/Crasher69/dj_eban/master/g2.gif" /></div>');
-		
-		intTimer = setInterval(kach, 40);
-	},1300);
-	
-}
+    start() {
+        this.playAudio();
+        setTimeout(() => this.createGifs(), 1300);
+    }
 
-function kach()
-{
-	var date = new Date();
-	var scaleStr = "";
-	let seconds = date.getSeconds();
-	scaleStr = "scale("+currscale+")"; 
-	
-		if (currScr%3 == 0){
-			$("body").css("background-color", getRandomColor());
-		}
-		
-		if (currScr%2 == 0){
-	
-			if (currscale == 1 || currscale<1) { 
-				currscale= currscale + 0.2;
-				scaledirection = "top";
-				scaleStr = "scale("+currscale+")"; 
-			}
-			
-			if (currscale > 1 && scaledirection == "top") { 
-				currscale= currscale + 0.2;
-				scaleStr = "scale("+currscale+")"; 
-			}
-			
-			if (currscale == 2 || currscale>2) { 
-				currscale = currscale - 0.2;
-				scaledirection = "down";
-				scaleStr = "scale("+currscale+")"; 
-			}
-			if (currscale > 1 && scaledirection == "down") { 
-				currscale= currscale - 0.2;
-				scaleStr = "scale("+currscale+")"; 
-			}		
-		}
+    playAudio() {
+        this.audio.play();
+    }
 
-		if (currScr<20 && direction == "top") {
-			currScr+=2;
-			$('body').css("transform", "rotate("+currScr+"deg) "+scaleStr+"");
-		}
-		if (currScr==20 && direction == "top") {
-			direction = "back";
-			currScr-=2;
-			$('body').css("transform", "rotate("+currScr+"deg) "+scaleStr+"");
-		}
-		if (currScr<20 && direction == "back") {
-			currScr-=2;
-			$('body').css("transform", "rotate("+currScr+"deg) "+scaleStr+"");
-		}
-		if (currScr == -20 && direction == "back") {
-			currScr+=2;
-			direction = "top";
-			$('body').css("transform", "rotate("+currScr+"deg) "+scaleStr+"");
-		}
-	
-}
+    createGifs() {
+        document.body.insertAdjacentHTML("beforeend", `
+            <div class="g1" style="position:fixed; top:100px; left:40%;">
+                <img src="https://raw.githubusercontent.com/Crasher69/dj_eban/master/g1.gif" />
+            </div>
+            <div class="g2" style="position:fixed; top:300px; right:30%;">
+                <img src="https://raw.githubusercontent.com/Crasher69/dj_eban/master/g2.gif" />
+            </div>
+        `);
+        this.intTimer = setInterval(() => this.kach(), 40);
+    }
 
+    kach() {
+        // Изменяем цвет фона каждые 3 кадра
+        if (this.currScr % 3 === 0) {
+            document.body.style.backgroundColor = this.getRandomColor();
+        }
 
-function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
+        // Управление масштабированием
+        this.updateScale();
+
+        // Управление вращением
+        this.updateRotation();
+    }
+
+    updateScale() {
+        if (this.currScale >= 2) this.scaleDirection = "down";
+        if (this.currScale <= 1) this.scaleDirection = "up";
+
+        this.currScale += (this.scaleDirection === "up" ? 0.2 : -0.2);
+    }
+
+    updateRotation() {
+        if (this.direction === "top") {
+            this.currScr += 2;
+            if (this.currScr >= 20) this.direction = "back";
+        } else {
+            this.currScr -= 2;
+            if (this.currScr <= -20) this.direction = "top";
+        }
+
+        document.body.style.transform = `rotate(${this.currScr}deg) scale(${this.currScale})`;
+    }
+
+    resetScene() {
+        clearInterval(this.intTimer);
+        document.querySelectorAll('.g1, .g2').forEach(el => el.remove());
+        document.body.style.transform = "none";
+        document.body.style.backgroundColor = "#fff";
+    }
+
+    getRandomColor() {
+        return `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
+    }
 }
