@@ -32,7 +32,6 @@ class DJEban {
     }
 
     kach() {
-        // Изменяем цвет фона каждые 3 кадра
         if (this.currScr % 3 === 0) {
             document.body.style.backgroundColor = this.getRandomColor();
         }
